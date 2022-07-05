@@ -36,6 +36,8 @@ class RubikCube:
     left = None
     top = None
     down = None
+    history = None
+    logs = False
 
     def __init__(self):
         self.front = CubeFace(Colors.BLUE)
@@ -44,7 +46,14 @@ class RubikCube:
         self.left = CubeFace(Colors.RED)
         self.top = CubeFace(Colors.YELLOW)
         self.down = CubeFace(Colors.WHITE)
+        self.history = []
 
+    def getHistory(self):
+        return self.history
+
+    def enableLogs(self):
+        self.logs = True
+        
     # Print the cube in 2D the terminal.
     def ui(self):
         emptyRow = lambda n: n*"          "
@@ -95,7 +104,9 @@ class RubikCube:
         ]
         for num in movementsToApply:
             rotation = moves[num]
-            print(rotation())
+            self.history.append(num)
+            if (self.logs):
+                print(rotation())
 
     # Apply n random movements to the cube.
     def randomMix(self, count):

@@ -27,6 +27,7 @@ face.piecesList.printList()
 
 # Test cube
 cube = RubikCube()
+cube.enableLogs()
 # print(cube.front.getPrintedRow(0))
 # print(cube.front.getPrintedRow(1))
 # print(cube.front.getPrintedRow(2))
@@ -66,9 +67,11 @@ print(cube.getScore())
 cube.randomMix(20)
 cube.ui()
 print(cube.getScore())
+print(cube.getHistory())
 
 
 cube2 = RubikCube()
+cube2.enableLogs()
 cube2.ui()
 movs = cube2.getRandomRotations(15)
 print(movs)
