@@ -105,8 +105,9 @@ class RubikCube:
         for num in movementsToApply:
             rotation = moves[num]
             self.history.append(num)
+            log = rotation()
             if (self.logs):
-                print(rotation())
+                print(log)
 
     # Apply n random movements to the cube.
     def randomMix(self, count):
