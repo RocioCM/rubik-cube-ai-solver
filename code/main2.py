@@ -16,21 +16,12 @@ print(coso.initialState.history)
 print(coso.initialState.ui())
 print(coso.initialHistory)
 print(coso.result)
-print(coso.time)
-print(coso.initialStateMovements)
-print(coso.populationSize)
-print(coso.maxTime)
-print(coso.mutationProbability)
-print(coso.splitPercent)
-print(coso.childrenPerParents)
+print(coso.result[1].ui())
+print(coso.result[1].getHistory())
 
 
-# print(coso.run())
-# cubo = coso.result[1]
-# print(cubo.getHistory())
-# cubo.ui()
-# print("MAX: ", RubikCube().getScore())
-
+print("MAX: ", RubikCube().getScore())
+print("PERCENT: ", coso.result[0]/RubikCube().getScore())
 
 # cube2 = RubikCube()
 # cube2.logs = True

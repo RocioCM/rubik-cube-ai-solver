@@ -9,10 +9,10 @@ class GeneticAlgorithm:
     result = None
     time = 0
     initialStateMovements = 30
-    populationSize = 100
-    maxTime = 200
-    mutationProbability = 0.05
-    splitPercent = 0.1
+    populationSize = 150
+    maxTime = 500
+    mutationProbability = 0.2
+    splitPercent = 0.2
     childrenPerParents = 2
 
 
@@ -93,10 +93,11 @@ class GeneticAlgorithm:
     def __mutateWithProbability(self, individual, probability):
         randomNumber = random.random()
         if (randomNumber <= probability):
-            index = random.randrange(len(individual.getHistory()))
-            newValue = random.randrange(12)
             newHistory = individual.getHistory().copy()
-            newHistory[index] = newValue
+            for i in range(3):
+                index = random.randrange(len(newHistory))
+                newValue = random.randrange(12)
+                newHistory[index] = newValue
             newIndividual = copy.deepcopy(self.initialState)
             newIndividual.applyMovements(newHistory)
             return newIndividual
@@ -105,8 +106,7 @@ class GeneticAlgorithm:
 
     def __getBestNextGeneration(self, parents, children):
         size = len(parents)
-        parents.sort(key=lambda tuple: tuple[0])
-        children.sort(key=lambda tuple: tuple[0])
+        children.sort(key=lambda tuple: tuple[0]) # Sort children by fitness. Parents are already sorted.
         # Keeps the best _splitPercent_ percentage of the previous generation and the other bests from the new generation.
         keptParents = parents[size - ceil(self.splitPercent * size):size]
         keptChildren = children[ceil(self.splitPercent * size):size]
@@ -120,10 +120,10 @@ class GeneticAlgorithm:
         # 1. Create a population with n random-mixed RubikCubes.
         population = self.__initPopulation()
         population.sort(key=lambda tuple: tuple[0])
-        time = 0
+        self.time = 0
         best = None
 
-        while (time < self.maxTime and not (self.__reachedSolution(best))):
+        while (self.time < self.maxTime and not (self.__reachedSolution(best))):
             # 1. Create the nextGeneration:
             children = []
             # 2. For reproduction, choose n random pairs.
@@ -146,10 +146,11 @@ class GeneticAlgorithm:
             population.sort(key=lambda tuple: tuple[0])
             # 7. Of that population, keep the record of the best individual. So if the individual is fit enough (threatened=0, the loop stops, else, it will stop anyway after z iterations).
             bestOfGeneration = population[-1]  # The last item is the most fitting.
-            if (time == 0 or best[0] < bestOfGeneration[0]):
+            if (self.time == 0 or best[0] < bestOfGeneration[0]):
                 best = bestOfGeneration
-            time += 1
+            self.time += 1
+            print(self.time, best[0])
         # 8. Return the record of the best individual you got across the whole algorithm (that is not necessary the last best, just the best across all).
-        self.result = (best[0], best[1], time)
+        self.result = (best[0], best[1], self.time)
         return self.result
 

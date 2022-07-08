@@ -125,10 +125,12 @@ class RubikCube:
                 tile = face.piecesList.array[i]
                 # Add one point if the tile is in the correct face.
                 if (tile.color == face.color):
-                    score += 1
+                    score += 2
                     # Add one extra point if the tile is in the correct position of the correct face.
                     if (tile.id == i):
-                        score += 1
+                        score += 3
+        if (len(self.history) >= 20 and len(self.history) <= 70):
+            score += 100//len(self.history)
         return score
 
     # Rotate a given face and the side pieces in the side faces.
