@@ -1,6 +1,8 @@
 from cube import RubikCube
 from genetic import GeneticAlgorithm
 
+print("MAX: ", RubikCube().getScore())
+
 cube = RubikCube()
 cube.enableLogs()
 cube.randomMix(30)
