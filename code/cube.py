@@ -105,8 +105,9 @@ class RubikCube:
         for num in movementsToApply:
             rotation = moves[num]
             self.history.append(num)
+            log = rotation()
             if (self.logs):
-                print(rotation())
+                print(log)
 
     # Apply n random movements to the cube.
     def randomMix(self, count):
@@ -122,12 +123,13 @@ class RubikCube:
         for face in faces:
             for i in range(face.piecesList.length):
                 tile = face.piecesList.array[i]
-                # Add one point if the tile is in the correct face.
                 if (tile.color == face.color):
-                    score += 1
-                    # Add one extra point if the tile is in the correct position of the correct face.
-                    if (tile.id == i):
-                        score += 1
+                    # Add one point if the tile is in the correct position of the correct face.
+                    if (int(tile.id) == i):
+                        if (int(tile.id) in [1,3,5,7]):
+                            score += 1.5 #More score for edges.
+                        else:
+                            score += 0.5 #Less score for vertex.
         return score
 
     # Rotate a given face and the side pieces in the side faces.
