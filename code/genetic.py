@@ -8,7 +8,7 @@ class GeneticAlgorithm:
     initialHistory = None
     result = None
     time = 0
-    initialStateMovements = 40
+    initialStateMovements = 30
     populationSize = 150
     maxTime = 500
     mutationProbability = 0.2
