@@ -47,6 +47,7 @@ class RubikCube:
         self.top = CubeFace(Colors.YELLOW)
         self.down = CubeFace(Colors.WHITE)
         self.history = []
+        self.maxScore = self.getScore()
 
     def getHistory(self):
         return self.history
@@ -54,6 +55,13 @@ class RubikCube:
     def enableLogs(self):
         self.logs = True
         
+    # Display the state of the cube: UI, history of movements and current score.
+    def print(self):
+        self.ui()
+        print("HISTORY:", self.history)
+        score = self.getScore()
+        print("SCORE:", score, "of", self.maxScore, "(" + str(100*score/self.maxScore) + "%)")
+
     # Print the cube in 2D the terminal.
     def ui(self):
         emptyRow = lambda n: n*"          "
@@ -127,9 +135,9 @@ class RubikCube:
                     # Add one point if the tile is in the correct position of the correct face.
                     if (int(tile.id) == i):
                         if (int(tile.id) in [1,3,5,7]):
-                            score += 1.5 #More score for edges.
+                            score += 1.5 #Edge score.
                         else:
-                            score += 0.5 #Less score for vertex.
+                            score += 1 #Vertex score.
         return score
 
     # Rotate a given face and the side pieces in the side faces.
@@ -195,3 +203,46 @@ class RubikCube:
     def rotateDownReverse(self):
         self.__rotate(self.down, [(Rows.DOWN, self.front), (Rows.DOWN, self.left), (Rows.DOWN, self.back), (Rows.DOWN, self.right)], True)
         return "Rotate Down Reverse"
+
+
+class DRLCube(RubikCube):
+    initialHistory = []
+    prevScore = 0
+
+    def __init__(self, movsCount):
+        super().__init__()
+        self.randomMix(movsCount)
+        self.initialHistory = self.getHistory()
+        self.history = []
+
+    def reset(self):
+        super().__init__()
+        super().applyMovements(self.initialHistory)
+        self.history = []
+
+    def step(self, action):
+        self.prevScore = self.getScore()
+        self.applyMovements([action])
+        return self.getState()
+
+    def getState(self):
+        score = self.getScore()
+        return (self.toArray(), score-self.prevScore, score==self.maxScore, score)
+
+    def toArray(self):
+        cubeArray = []
+        faces = [self.front, self.back, self.left, self.right, self.top, self.down]
+        colors = dict()
+        colors[Colors.BLUE] = 0
+        colors[Colors.GREEN] = 1
+        colors[Colors.RED] = 2
+        colors[Colors.ORANGE] = 3
+        colors[Colors.YELLOW] = 4
+        colors[Colors.WHITE] = 5
+
+        for face in faces:
+            facePieces = list(
+            map(lambda piece: (colors[piece.color]*10 + int(piece.id)), face.piecesList.array))
+            cubeArray.extend(facePieces)
+        return cubeArray
+
