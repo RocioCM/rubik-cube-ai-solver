@@ -92,13 +92,14 @@ def train_dqn(episodes, env, params):
     agent = DQN(params)
     for e in range(episodes):
         # This is one episode: 
+        print("EPISODE", e)
         start = time.time()
         score_episode = 0
         env.reset()
         state = env.getState()
         state = np.reshape(state[0], (1, params["state_space"]))
         score = 0
-        max_movs = 1000
+        max_movs = 400
         for mov in range(max_movs):
             # This is one movement/rotation:
             action = agent.act(state)
@@ -117,6 +118,8 @@ def train_dqn(episodes, env, params):
                 break
             else:
                 score_episode = new_score_episode
+        print(env.print()) ##
+        
         sum_of_rewards.append(score)
         end = time.time()
         dc = DataCollected(e,score_episode,end-start)
