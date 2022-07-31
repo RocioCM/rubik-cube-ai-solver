@@ -6,8 +6,8 @@
 
 El cubo rubik es un puzzle combinatorio tridimensional consistente en un cubo donde cada una de las seis caras tiene un color distinto y a su vez dicha cara está dividida en 9 cuadrados distribuidos en una cuadrícula de 3x3. En este puzzle se puede rotar cada cara sobre su propio eje y el desafío es, únicamente mediante la rotación de las distintas caras, mezclar los colores del cubo y luego lograr volver al estado original en donde cada cara tiene cuadrados de un único color.
 
-<img src="https://user-images.githubusercontent.com/69587750/182031769-3876bcf9-f024-484b-801d-76c4e92b9200.gif" alt="cubo rubik en acción" width="200"/>
-Figura 1: cubo rubik en acción
+
+<img src="https://user-images.githubusercontent.com/69587750/182031769-3876bcf9-f024-484b-801d-76c4e92b9200.gif" alt="cubo rubik en acción" width="400"  /> <br/> Figura 1: cubo rubik en acción
 
 Este puzzle tiene más de 43 trillones de posibles estados o permutaciones distintas de sus piezas y sólo se considera a uno de todos esos estados como la solución. Como ya se adelantó, ese único estado es aquel en el que cada cara tiene piezas de un solo color. Teniendo en cuenta esta gran cantidad de estados y considerando a su vez que el estado objetivo es únicamente uno, se revela a simple vista que una aproximación para resolver este problema mediante fuerza bruta es inviable.
 
@@ -36,8 +36,8 @@ Ya se introdujo que el cubo rubik es un puzzle combinatorio tridimensional consi
 
 Vale destacar que quien sostiene el cubo puede rotarlo completo, por lo que la cara del frente no siempre tendrá el mismo color central y lo mismo con las otras 5 caras. Pero para la implementación del modelo se restringió el cubo completo a una sola orientación, dado que esta rotación agrega complejidad innecesaria a la implementación y no agrega funcionalidad alguna. Por lo que en el modelo la cara de frente siempre es color azul, la cara de debajo siempre es color blanco y lo mismo con las otras 4 caras, siempre tienen el mismo color central.
 
-<img src="https://user-images.githubusercontent.com/69587750/182031769-3876bcf9-f024-484b-801d-76c4e92b9200.gif" alt="notación de rotaciones" width="200"/>
-Figura 2: notación estándar de rotaciones
+
+<img src="https://user-images.githubusercontent.com/69587750/182050207-2f85ee1c-0d89-49b2-95bd-9574fe49e502.jpg" alt="notación de rotaciones" width="600"/> <br/> Figura 2: notación estándar de rotaciones
 
 A nivel estructural, el cubo original está compuesto por 26 piezas tridimensionales con las siguientes características:
 
@@ -47,8 +47,7 @@ A nivel estructural, el cubo original está compuesto por 26 piezas tridimension
 
 - 8 piezas móviles con 3 lados de color. Estas piezas son las esquinas o vértices del cubo y cambian de posición al realizar rotaciones.
 
-<img src="https://user-images.githubusercontent.com/69587750/182031769-3876bcf9-f024-484b-801d-76c4e92b9200.gif" alt="cubo rubik desensamblado" width="200"/>
-Figura 3: cubo rubik desensamblado
+<img src="https://user-images.githubusercontent.com/69587750/182050214-c726c5c8-15b4-4201-b1ce-1cb73a871a78.png" alt="cubo rubik desensamblado" width="400"/> <br/> Figura 3: cubo rubik desensamblado
 
 Es importante conocer la estructura interna del cubo ya que esta impone restricciones sobre el dominio de posibilidades del cubo que se deben implementar en el modelo computacional del mismo y sirve para definir correctamente la condición de "pieza colocada correctamente".
 
@@ -56,8 +55,7 @@ De forma intuitiva, se puede decir que mientras más piezas estén colocadas en 
 
 En numerosos trabajos se ha implementado este problema [1][2][3][4][5][6] para los cuales se han utilizado distintos modelos computacionales para representar el cubo rubik. En este trabajo se decidió no utilizar ningún modelo previo y para representar un cubo rubik se creó desde cero una estructura de datos apropiada para el problema. Este modelo se visualiza como una versión bidimensional del cubo original tridimensional.
 
-<img src="https://user-images.githubusercontent.com/69587750/182031769-3876bcf9-f024-484b-801d-76c4e92b9200.gif" alt="representación 2D del cubo" width="200"/>
-Figura 4: representación visual del cubo resuelto y desarmado.
+<img src="https://user-images.githubusercontent.com/69587750/182050218-fda5d3e4-2cb5-40a7-8a66-965e690a425e.png" alt="representación 2D del cubo" width="800"/> <br/> Figura 4: representación visual del cubo resuelto y desarmado.
 
 Cuando se inicializa un objeto Cubo, este se encuentra en el estado objetivo y luego puede ser alterado mediante la ejecución de rotaciones. Este modelo cuenta con seis atributos, cada uno representando una cara del cubo, independientes entre sí: cara de frente, arriba, abajo, izquierda, derecha y detrás.
 
@@ -124,8 +122,7 @@ Los pasos que se efectúan secuencialmente dentro del bucle para cada generació
 
 - Entrecruzamiento: a partir de cada par de padres, se generan 2 individuos hijos. Cada individuo guarda registro del historial de acciones que le fueron aplicadas para llegar desde el estado inicial a su estado actual y para la operación de entrecruzamiento, se hace uso del historial de ambos padres. Aleatoriamente se elige un punto de cruce para cada padre. Esto es porque se busca que no todos los individuos tengan un historial de la misma longitud. El historial de cada padre se corta en dos partes en el punto correspondiente y se generan dos nuevos historiales: uno con la primera mitad del historial del primer padre y la segunda mitad del segundo padre; y otro con la primera mitad del historial del segundo padre y la segunda mitad del primer padre, como se puede visualizar en la Figura 5. Luego se generan dos individuos copias del estado inicial y se le aplica a cada uno una de estas listas de acciones. De este modo se obtienen los dos hijos. Si se quisieran obtener más de dos hijos por pareja de padres, bastaría repetir el procedimiento de entrecruzamiento n/2 veces, donde n es el número de hijos que se quiere obtener. Vale mencionar que el entrecruzamiento se implementó mezclando los historiales de los padres y no el estado actual porque, de haber sido así, no respetaría el funcionamiento del cubo rubik real y simplemente entrecruzar la combinación de piezas de ambos padres podría conducir a estados irresolubles del cubo aplicando solo secuencias de las 12 acciones ya descriptas.
 
-<img src="https://user-images.githubusercontent.com/69587750/182031769-3876bcf9-f024-484b-801d-76c4e92b9200.gif" alt="operación de crossover" width="200"/>
-Figura 5: operación de entrecruzamiento
+<img src="https://user-images.githubusercontent.com/69587750/182050482-3933e818-1e74-42d2-b619-1f05782bbfde.png" alt="operación de crossover" width="600"/> <br/> Figura 5: operación de entrecruzamiento
 
 - Mutación: cada individuo hijo tiene una mínima probabilidad predefinida de sufrir una mutación en su historial y, en consecuencia, en su estado actual. Si el individuo efectivamente es elegido para la operación de mutación, se selecciona aleatoriamente 3 acciones de su historial y se las remplaza con 3 nuevas acciones también aleatorias. Tras alterar el historial del individuo, se actualiza su estado actual para reflejar el cambio.
 
@@ -155,16 +152,15 @@ El conjunto de acciones que el agente puede elegir son 12, todas las posibles ro
 
 El conjunto de estados posibles para este problema es tan amplio como estados posibles tiene el cubo rubik, es decir, aproximadamente 43 trillones de estados. Este estado se representa como un arreglo de 48 números distintos, donde cada número representa una de las 48 piezas de color del cubo y su índice en el arreglo indica su posición en las caras el cubo. Por tanto, hay solo un orden de los números que es el estado objetivo y, por cómo se implementó, este orden objetivo es que los números estén en orden ascendente. En la Figura 6 se puede apreciar la transformación entre la representación visual del estado objetivo y su forma de arreglo.
 
-<img src="https://user-images.githubusercontent.com/69587750/182031769-3876bcf9-f024-484b-801d-76c4e92b9200.gif" alt=" representaciones del cubo rubik" width="200"/>
-Figura 6: representaciones del cubo rubik
-
+<img src="https://user-images.githubusercontent.com/69587750/182050524-e717db83-a547-429b-afa1-c940a61ea8d6.png" alt=" representaciones del cubo rubik" width="800"/> <br/> Figura 6: distintas representaciones del cubo rubik
+ 
 La recompensa por cada acción es una diferencia entre la función de fitness del entorno antes de realizar la acción y después de realizarla. La función de fitness es la misma utilizada en el algoritmo genético, que indica qué tan cerca está el cubo del estado objetivo.
 
 A partir del estado actual del entorno, el agente elige una acción. Esta acción se ejecuta en el entorno, es decir, se efectúa una rotación en el cubo, y se obtiene un nuevo estado y una recompensa (ya sea positiva o negativa). El agente utiliza la recompensa obtenida en su función de optimización para corregir o mantener su política, en búsqueda de obtener las mayores recompensas en la próxima oportunidad.
 
 Los autores del trabajo [17] explican cómo está conformado el modelo que se tomó como base para esta implementación:
 
-<< El modelo utiliza un conjunto de capas de tipo Dense, cada una con un total de 128 variables ocultas o "weights" que utilizan la función de activación de Keras "Relu". También hace uso de una técnica llamada "Replay" que ayuda considerablemente con el aprendizaje. La técnica Replay se basa en almacenar experiencias pasadas, para posteriormente "rejugarlas" todas a cada paso que da, un paralelismo un poco más claro es ver la repetición de un partido que ya jugaste antes de jugar el próximo, para así entender tus errores y obtener más información de cada una de tus decisiones, algo así como un repaso de experiencias pasadas >>.
+> El modelo utiliza un conjunto de capas de tipo Dense, cada una con un total de 128 variables ocultas o "weights" que utilizan la función de activación de Keras "Relu". También hace uso de una técnica llamada "Replay" que ayuda considerablemente con el aprendizaje. La técnica Replay se basa en almacenar experiencias pasadas, para posteriormente "rejugarlas" todas a cada paso que da, un paralelismo un poco más claro es ver la repetición de un partido que ya jugaste antes de jugar el próximo, para así entender tus errores y obtener más información de cada una de tus decisiones, algo así como un repaso de experiencias pasadas.
 
 ## Diseño experimental
 
@@ -224,9 +220,9 @@ Si bien la implementación de DRL realizada para este trabajo no dio resultados 
 
 [12] Russell, S., Norvig, P. (2008). AIMA: Inteligencia Artificial. Un enfoque moderno. Segunda edición. 4.3 Algoritmos genéticos, 131-135.
 
-[13] (Algoritmos genéticos: Funcionamiento, Pasos y Aplicaciones)[https://www.tecnologias-informacion.com/algoritmosgeneticos.html]
+[13] [Algoritmos genéticos: Funcionamiento, Pasos y Aplicaciones](https://www.tecnologias-informacion.com/algoritmosgeneticos.html)
 
-[14] (Genetic algorithm)[https://en.wikipedia.org/wiki/Genetic_algorithm]
+[14] [Genetic algorithm](https://en.wikipedia.org/wiki/Genetic_algorithm)
 
 [15] [Understanding Markov Decision Process (MDP)](https://towardsdatascience.com/understanding-the-markov-decision-process-mdp-8f838510f150)
 
