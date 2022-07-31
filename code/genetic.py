@@ -3,9 +3,9 @@ from math import ceil
 import copy
 import random
 
+
 class GeneticAlgorithm:
     initialState = None
-    initialHistory = None
     result = None
     time = 0
     initialStateMovements = 30
@@ -15,17 +15,13 @@ class GeneticAlgorithm:
     splitPercent = 0.2
     childrenPerParents = 2
 
-
     def __init__(self, initialCube):
-        self.initialHistory = initialCube.getHistory()
         initialCube.history = []
         self.initialState = initialCube
-
 
     def __formatPopulationWithFitness(self, population): return list(
         map(lambda individual:
             (individual.getScore(), individual), population))
-
 
     def __initPopulation(self):
         def Individual():
@@ -36,7 +32,6 @@ class GeneticAlgorithm:
         population = [Individual() for i in range(self.populationSize)]
         return self.__formatPopulationWithFitness(population)
 
-
     def __reachedSolution(self, bestIndividual):
         if (bestIndividual == None):
             return False
@@ -46,11 +41,10 @@ class GeneticAlgorithm:
             return True
         return False
 
-
     def __selectParentsWithProbability(self, population):
         parents = []
         populationCopy = population.copy()
-        maxFitness = RubikCube().getScore() 
+        maxFitness = RubikCube().getScore()
         for i in range(2):
             randomNumber = random.random()
             random.shuffle(populationCopy)
@@ -61,11 +55,11 @@ class GeneticAlgorithm:
                 if (randomNumber <= probabilityToReproduce):
                     parent = individual
                 elif ((i == 0 and len(populationCopy) == 1)
-                    or (i == 1 and len(populationCopy) == 0)):
-                    parent = individual  #Only if no more parents are available.
+                      or (i == 1 and len(populationCopy) == 0)):
+                    # Only if no more parents are available.
+                    parent = individual
             parents.append(parent[1])
         return parents
-
 
     def __reproduce(self, parents):
         [parent1, parent2] = parents
@@ -79,16 +73,17 @@ class GeneticAlgorithm:
             splitIndex1 = random.randrange(len(parent1History))
             splitIndex2 = random.randrange(len(parent2History))
             child1History = parent1History[0:splitIndex1]
-            child1History.extend(parent2History[splitIndex2:len(parent2History)])
+            child1History.extend(
+                parent2History[splitIndex2:len(parent2History)])
             child2History = parent2History[0:splitIndex2]
-            child2History.extend(parent1History[splitIndex1:len(parent1History)])
+            child2History.extend(
+                parent1History[splitIndex1:len(parent1History)])
             child1 = copy.deepcopy(self.initialState)
             child1.applyMovements(child1History)
             child2 = copy.deepcopy(self.initialState)
             child2.applyMovements(child2History)
             children.extend([child1, child2])
         return children[0:self.childrenPerParents]
-
 
     def __mutateWithProbability(self, individual, probability):
         randomNumber = random.random()
@@ -103,17 +98,16 @@ class GeneticAlgorithm:
             return newIndividual
         return individual
 
-
     def __getBestNextGeneration(self, parents, children):
         size = len(parents)
-        children.sort(key=lambda tuple: tuple[0]) # Sort children by fitness. Parents are already sorted.
+        # Sort children by fitness. Parents are already sorted.
+        children.sort(key=lambda tuple: tuple[0])
         # Keeps the best _splitPercent_ percentage of the previous generation and the other bests from the new generation.
         keptParents = parents[size - ceil(self.splitPercent * size):size]
         keptChildren = children[ceil(self.splitPercent * size):size]
         newPopulation = keptChildren
         newPopulation.extend(keptParents)
         return newPopulation
-
 
     def run(self):
         self.result = None
@@ -137,7 +131,8 @@ class GeneticAlgorithm:
             # 3.2. Each child has m probability of mutating a random position.
             for i in range(len(children)):
                 child = children[i]
-                children[i] = self.__mutateWithProbability(child, self.mutationProbability)
+                children[i] = self.__mutateWithProbability(
+                    child, self.mutationProbability)
             # 4. Calculate the fitness for each new children.
             children = self.__formatPopulationWithFitness(children)
             # 5. Kill the worst (and keep the best from parents and children).
@@ -145,7 +140,8 @@ class GeneticAlgorithm:
             # 6. Order it (more fitting, more probability to reproduce. I mean, priority queue by fitness).
             population.sort(key=lambda tuple: tuple[0])
             # 7. Of that population, keep the record of the best individual. So if the individual is fit enough (threatened=0, the loop stops, else, it will stop anyway after z iterations).
-            bestOfGeneration = population[-1]  # The last item is the most fitting.
+            # The last item is the most fitting.
+            bestOfGeneration = population[-1]
             if (self.time == 0 or best[0] < bestOfGeneration[0]):
                 best = bestOfGeneration
             self.time += 1
@@ -153,4 +149,3 @@ class GeneticAlgorithm:
         # 8. Return the record of the best individual you got across the whole algorithm (that is not necessary the last best, just the best across all).
         self.result = (best[0], best[1], self.time)
         return self.result
-
