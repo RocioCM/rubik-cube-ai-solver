@@ -184,15 +184,15 @@ Para medir la eficiencia de los resultados se utilizó el algoritmo completament
 
 En la Figura 7 se pueden observar los tiempos de ejecución de ambos algoritmos en cada iteración. El promedio de tiempo de ejecución para el algoritmo aleatorio fue de 35.2 segundos, mientras que para el algoritmo genético fue de 63.7 segundos. El algoritmo aleatorio ejecutó en promedio 55% más rápido que su contraparte, lo cual es esperable debido a la mayor complejidad del algoritmo genético.
 
-<img src="https://user-images.githubusercontent.com/69587750/182050524-e717db83-a547-429b-afa1-c940a61ea8d6.png" alt="tiempos de ejecución" width="800"/> <br/> Figura 7: tiempos de ejecución
+<img src="https://user-images.githubusercontent.com/69587750/182073451-820acb38-29e7-45e6-a65e-eb7463461b14.png" alt="tiempos de ejecución" width="500"/> <br/> Figura 7: tiempos de ejecución
 
 Tanto el algoritmo genético como el aleatorio no fueron capaces de llegar al estado objetivo en ninguna ejecución. Es por esto que se tomó el mejor cubo que cada algoritmo logró generar y se midió su porcentaje de piezas colocadas correctamente. En la Figura 8 se pueden visualizar los resultados alcanzados por ambos algoritmos en cada iteración. El promedio de progreso alcanzado por el algoritmo aleatorio fue de 34%, mientras que para el algoritmo genético fue de 43%. Esto revela una diferencia del 9% entre ambos algoritmos. Si bien es de esperarse que el algoritmo genético obtenga mejores resultados que el algoritmo aleatorio gracias a su técnica más compleja, resulta sorprendente que esta diferencia no sea significativa.
 
-<img src="https://user-images.githubusercontent.com/69587750/182050524-e717db83-a547-429b-afa1-c940a61ea8d6.png" alt="resultados por ejecución" width="800"/> <br/> Figura 8: resultados por ejecución
+<img src="https://user-images.githubusercontent.com/69587750/182073462-ba0f4053-5037-4aeb-bad5-725af8323ac9.png" alt="resultados por ejecución" width="500"/> <br/> Figura 8: resultados por ejecución
 
 Para el algoritmo aleatorio, todos los resultados tuvieron una totalidad de 20 acciones en su historial, dado que el algoritmo fue configurado para que así fuera. Mientras que el algoritmo genético fue implementado de forma que este número varía para cada individuo. En la Figura 9 se puede visualizar el número de acciones ejecutadas para el cubo resultado de cada iteración. El promedio de este número entre todas las ejecuciones es de 35 acciones, que resulta un poco más alto de lo esperado, pero no resulta alarmante, dado que el número ideal de movimientos es 20 o menos [8].
 
-<img src="https://user-images.githubusercontent.com/69587750/182050524-e717db83-a547-429b-afa1-c940a61ea8d6.png" alt="acciones por cubo" width="800"/> <br/> Figura 9: acciones por cubo
+<img src="https://user-images.githubusercontent.com/69587750/182073471-b20d5b48-11e6-4df0-aeca-44d936aba694.png" alt="acciones por cubo" width="500"/> <br/> Figura 9: acciones por cubo
 
 ## Conclusiones
 
