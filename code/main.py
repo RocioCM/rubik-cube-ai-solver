@@ -2,7 +2,7 @@ from list import Tile, TilesRingList
 from cube import CubeFace, RubikCube
 
 # Test Tile
-tile = Tile("coso",1)
+tile = Tile("coso", 1)
 print(tile)
 print(tile.color)
 print(tile.id)

@@ -1,33 +1,48 @@
 from cube import RubikCube
 from genetic import GeneticAlgorithm
+import copy
+import time
 
-print("MAX: ", RubikCube().getScore())
+cube0 = RubikCube()
+cube0.enableLogs()
+cube0.randomMix(30)
+cube0.print()
+cube0.logs = False
 
-cube = RubikCube()
-cube.enableLogs()
-cube.randomMix(30)
-cube.ui()
-print(cube.getHistory())
-cube.logs = False
+# ---- RANDOM ALGORITHM ---- #
 
+acc = 0
+maxScore = 0
+gen = GeneticAlgorithm(RubikCube())
+it = gen.maxTime * gen.populationSize
+results = []
+
+startTime = time.time()
+for i in range(it):
+    cube = copy.deepcopy(cube0)
+    cube.randomMix(20)
+    score = cube.getScore()
+    results.append(score)
+    acc += score
+    if (score > maxScore):
+        maxScore = score
+execTime = (time.time() - startTime)
+
+print("--RANDOM--")
+print("Promedio:", acc/it)
+print("SCORE:", maxScore)
+print("Random time:", execTime)
 print("---------")
-coso = GeneticAlgorithm(cube)
-coso.run()
-print(coso.initialState)
-print(coso.initialState.history)
-print(coso.initialState.ui())
-print(coso.initialHistory)
-print(coso.result)
-print(coso.result[1].ui())
-print(coso.result[1].getHistory())
 
 
-print("MAX: ", RubikCube().getScore())
-print("PERCENT: ", coso.result[0]/RubikCube().getScore())
+# ---- GENETIC ALGORITHM ---- #
 
-# cube2 = RubikCube()
-# cube2.logs = True
-# cube2.applyMovements([0, 1, 1, 2, 8, 6, 5, 9, 11, 11, 6, 8, 10, 7, 9, 0, 8, 8, 9, 6, 3, 2, 8, 11, 6, 0, 5, 9, 8, 11])
-# cube2.ui()
-# print(cube2.getHistory())
-# print(cube2.getScore())
+startTime = time.time()
+cube = GeneticAlgorithm(cube0)
+cube.run()
+execTime = (time.time() - startTime)
+
+cube.initialState.print()
+print(cube.result)
+cube.result[1].print()
+print("Genetic time:", execTime)

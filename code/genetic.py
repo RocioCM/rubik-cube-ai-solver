@@ -8,9 +8,9 @@ class GeneticAlgorithm:
     result = None
     time = 0
     initialStateMovements = 30
-    populationSize = 150
-    maxTime = 500
-    mutationProbability = 0.2
+    populationSize = 250
+    maxTime = 200
+    mutationProbability = 0.5
     splitPercent = 0.2
     childrenPerParents = 2
 
@@ -142,7 +142,7 @@ class GeneticAlgorithm:
             if (self.time == 0 or best[0] < bestOfGeneration[0]):
                 best = bestOfGeneration
             self.time += 1
-            print(self.time, best[0])
+            # print(self.time, best[0])
         # 8. Return the record of the best individual you got across the whole algorithm (that is not necessary the last best, just the best across all).
         self.result = (best[0], best[1], self.time)
         return self.result

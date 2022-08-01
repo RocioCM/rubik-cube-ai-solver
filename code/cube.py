@@ -67,7 +67,7 @@ class RubikCube:
     def print(self):
         self.ui()
         print("HISTORY:", self.history)
-        print("SCORE:", 100*self.getScore())
+        print("SCORE:", str(100*self.getScore())+"%")
 
     # Print the cube in 2D the terminal.
     def ui(self):
