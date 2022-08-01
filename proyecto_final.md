@@ -6,7 +6,6 @@
 
 El cubo rubik es un puzzle combinatorio tridimensional consistente en un cubo donde cada una de las seis caras tiene un color distinto y a su vez dicha cara está dividida en 9 cuadrados distribuidos en una cuadrícula de 3x3. En este puzzle se puede rotar cada cara sobre su propio eje y el desafío es, únicamente mediante la rotación de las distintas caras, mezclar los colores del cubo y luego lograr volver al estado original en donde cada cara tiene cuadrados de un único color.
 
-
 <img src="https://user-images.githubusercontent.com/69587750/182031769-3876bcf9-f024-484b-801d-76c4e92b9200.gif" alt="cubo rubik en acción" width="400"  /> <br/> Figura 1: cubo rubik en acción
 
 Este puzzle tiene más de 43 trillones de posibles estados o permutaciones distintas de sus piezas y sólo se considera a uno de todos esos estados como la solución. Como ya se adelantó, ese único estado es aquel en el que cada cara tiene piezas de un solo color. Teniendo en cuenta esta gran cantidad de estados y considerando a su vez que el estado objetivo es únicamente uno, se revela a simple vista que una aproximación para resolver este problema mediante fuerza bruta es inviable.
@@ -35,7 +34,6 @@ Ya se introdujo que el cubo rubik es un puzzle combinatorio tridimensional consi
 - Cara Abajo sentido contrarreloj
 
 Vale destacar que quien sostiene el cubo puede rotarlo completo, por lo que la cara del frente no siempre tendrá el mismo color central y lo mismo con las otras 5 caras. Pero para la implementación del modelo se restringió el cubo completo a una sola orientación, dado que esta rotación agrega complejidad innecesaria a la implementación y no agrega funcionalidad alguna. Por lo que en el modelo la cara de frente siempre es color azul, la cara de debajo siempre es color blanco y lo mismo con las otras 4 caras, siempre tienen el mismo color central.
-
 
 <img src="https://user-images.githubusercontent.com/69587750/182050207-2f85ee1c-0d89-49b2-95bd-9574fe49e502.jpg" alt="notación de rotaciones" width="600"/> <br/> Figura 2: notación estándar de rotaciones
 
@@ -153,7 +151,7 @@ El conjunto de acciones que el agente puede elegir son 12, todas las posibles ro
 El conjunto de estados posibles para este problema es tan amplio como estados posibles tiene el cubo rubik, es decir, aproximadamente 43 trillones de estados. Este estado se representa como un arreglo de 48 números distintos, donde cada número representa una de las 48 piezas de color del cubo y su índice en el arreglo indica su posición en las caras el cubo. Por tanto, hay solo un orden de los números que es el estado objetivo y, por cómo se implementó, este orden objetivo es que los números estén en orden ascendente. En la Figura 6 se puede apreciar la transformación entre la representación visual del estado objetivo y su forma de arreglo.
 
 <img src="https://user-images.githubusercontent.com/69587750/182050524-e717db83-a547-429b-afa1-c940a61ea8d6.png" alt=" representaciones del cubo rubik" width="800"/> <br/> Figura 6: distintas representaciones del cubo rubik
- 
+
 La recompensa por cada acción es una diferencia entre la función de fitness del entorno antes de realizar la acción y después de realizarla. La función de fitness es la misma utilizada en el algoritmo genético, que indica qué tan cerca está el cubo del estado objetivo.
 
 A partir del estado actual del entorno, el agente elige una acción. Esta acción se ejecuta en el entorno, es decir, se efectúa una rotación en el cubo, y se obtiene un nuevo estado y una recompensa (ya sea positiva o negativa). El agente utiliza la recompensa obtenida en su función de optimización para corregir o mantener su política, en búsqueda de obtener las mayores recompensas en la próxima oportunidad.
@@ -166,31 +164,41 @@ Los autores del trabajo [17] explican cómo está conformado el modelo que se to
 
 ### Análisis
 
-/// Probar mezclar con más o menos movimientos al cubo inicial.
+Para probar el algoritmo genético, se corrieron 10 ejecuciones del mismo y se registró su tiempo de ejecución y resultados. El algoritmo genético fue configurado con los siguientes parámetros:
 
-Para probar el algoritmo genético, se corrieron 30 ejecuciones del mismo y se registró su tiempo de ejecución y resultados. Para comparar la eficiencia de los resultados, también se ejecutaron 300 mezclas aleatorias del cubo y se registraron los resultados.
+- Número máximo de generaciones: 200
+- Individuos por generación: 250
+- Probabilidad de mutación: 0.5
+- Split percent: 0.2
+- Acciones iniciales: 30
 
-El algoritmo genético se configuró de la misma forma para todas las ejecuciones: la mezcla inicial fue siempre de 30 movimientos aleatorios, la cantidad de generaciones máxima y tamaño de población fueron las mismas. Partiendo, en primera instancia, de estados siempre iguales; y en segunda instancia, de estados distintos generados a través de m movimientos aleatorios.
+El parámetro split percent indica qué porcentaje de la población previa se conservará en cada nueva generación. El parámetro acciones iniciales indica qué cantidad de acciones aleatorias se aplicará a cada individuo de la primera generación.
 
-El tiempo de ejecución es tal y su promedio es tal.
+Para medir la eficiencia de los resultados se utilizó el algoritmo completamente aleatorio. El procedimiento en cada ejecución fue el siguiente:
 
-[Inserte figura]
+1. Se inicializa un objeto CuboRubik y se le aplican 30 movimientos aleatorios. Este mismo cubo posteriormente se utiliza como estado inicial para el algoritmo aleatorio y para el genético.
 
-El algoritmo llegó al estado objetivo en 0% de las ejecuciones.
+2.Se ejecuta 50000 veces el algoritmo aleatorio para este cubo en particular. El algoritmo se configuró para efectuar 20 movimientos y registrar el puntaje de fitness obtenido. Se eligió el número 50000 dado que el algoritmo genético a lo largo de su ejecución crea exactamente ese número de individuos (se obtiene este número al multiplicar la cantidad máxima de generaciones por la cantidad de individuos por generación). Se guarda registro del mejor individuo obtenido entre todas las ejecuciones y el tiempo total de ejecución entre todas las iteraciones.
 
-La cantidad de acciones ejecutadas para el cubo resultado de cada ejecución fue así y su promedio es tal. Comparar contra el ideal de 20 movimientos. Es bueno o malo.
+3. Se ejecuta el algoritmo genético utilizando el mismo cubo como estado inicial con los parámetros previamente expuestos. Se registra el resultado obtenido y el tiempo de ejecución.
 
-[Inserte gráfico]
+En la Figura 7 se pueden observar los tiempos de ejecución de ambos algoritmos en cada iteración. El promedio de tiempo de ejecución para el algoritmo aleatorio fue de 35.2 segundos, mientras que para el algoritmo genético fue de 63.7 segundos. El algoritmo aleatorio ejecutó en promedio 55% más rápido que su contraparte, lo cual es esperable debido a la mayor complejidad del algoritmo genético.
 
-A su vez, se calculó el promedio de la mezcla aleatoria (con una muestra de 300 mezclas). Y su promedio es tal. Se comparan ambos promedios:
+<img src="https://user-images.githubusercontent.com/69587750/182050524-e717db83-a547-429b-afa1-c940a61ea8d6.png" alt="tiempos de ejecución" width="800"/> <br/> Figura 7: tiempos de ejecución
 
-[Inserte gráfico]
+Tanto el algoritmo genético como el aleatorio no fueron capaces de llegar al estado objetivo en ninguna ejecución. Es por esto que se tomó el mejor cubo que cada algoritmo logró generar y se midió su porcentaje de piezas colocadas correctamente. En la Figura 8 se pueden visualizar los resultados alcanzados por ambos algoritmos en cada iteración. El promedio de progreso alcanzado por el algoritmo aleatorio fue de 34%, mientras que para el algoritmo genético fue de 43%. Esto revela una diferencia del 9% entre ambos algoritmos. Si bien es de esperarse que el algoritmo genético obtenga mejores resultados que el algoritmo aleatorio gracias a su técnica más compleja, resulta sorprendente que esta diferencia no sea significativa.
+
+<img src="https://user-images.githubusercontent.com/69587750/182050524-e717db83-a547-429b-afa1-c940a61ea8d6.png" alt="resultados por ejecución" width="800"/> <br/> Figura 8: resultados por ejecución
+
+Para el algoritmo aleatorio, todos los resultados tuvieron una totalidad de 20 acciones en su historial, dado que el algoritmo fue configurado para que así fuera. Mientras que el algoritmo genético fue implementado de forma que este número varía para cada individuo. En la Figura 9 se puede visualizar el número de acciones ejecutadas para el cubo resultado de cada iteración. El promedio de este número entre todas las ejecuciones es de 35 acciones, que resulta un poco más alto de lo esperado, pero no resulta alarmante, dado que el número ideal de movimientos es 20 o menos [8].
+
+<img src="https://user-images.githubusercontent.com/69587750/182050524-e717db83-a547-429b-afa1-c940a61ea8d6.png" alt="acciones por cubo" width="800"/> <br/> Figura 9: acciones por cubo
 
 ## Conclusiones
 
 En este trabajo se hizo foco en la resolución del problema mediante el algoritmo genético, a pesar de que numerosos trabajos previos indiquen que el método más efectivo y más utilizado para resolver este problema es Deep Reinforcement Learning.
 
-Visto que una implementación por fuerza bruta sería prácticamente imposible y la implementación completamente aleatoria no dio resultados relevantes, los resultados obtenidos mediante el algoritmo genético sí resultan ser valiosos. Si bien este algoritmo no logró en ninguna ocasión armar el cubo por completo, un promedio del cubo xx% completado es un resultado aceptable para los objetivos de este trabajo. Es destacable que la obtención de resultados parciales es una posibilidad completamente esperable del algoritmo genético dado que es un algoritmo de optimización y esto fue tenido en consideración al elegir este algoritmo.
+Visto que una implementación por fuerza bruta sería prácticamente imposible, se hizo una implementación completamente aleatoria únicamente con fines ilustrativos pero que dio mejores resultados que lo esperado. Mientras que los resultados obtenidos mediante el algoritmo genético fueron levemente superiores en calidad, pero peores en tiempo de ejecución. Para este problema en específico resulta más relevante la calidad del resultado antes que el tiempo ocupado, por lo que el algoritmo genético resulta ser más óptimo en esa comparación. Si bien este algoritmo no logró en ninguna ocasión armar el cubo por completo, un promedio del cubo 43% completado es un resultado aceptable para los objetivos de este trabajo. Es destacable que la obtención de resultados parciales es una posibilidad completamente esperable del algoritmo genético dado que es un algoritmo de optimización y esto fue tenido en cuenta al elegir este algoritmo.
 
 Si bien la implementación de DRL realizada para este trabajo no dio resultados aceptables, se ha probado que la técnica sí resulta ser efectiva para este problema en numerosos trabajos previos ya citados. De todos modos, se deja fuera del alcance de este trabajo la adaptación de este algoritmo para que entregue resultados valiosos como los obtenidos en otros trabajos mediante la misma técnica.
 
