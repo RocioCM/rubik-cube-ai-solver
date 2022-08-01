@@ -1,4 +1,3 @@
-from cube import RubikCube
 from math import ceil
 import copy
 import random
@@ -36,22 +35,20 @@ class GeneticAlgorithm:
         if (bestIndividual == None):
             return False
         fitness = bestIndividual[0]
-        desiredScore = RubikCube().getScore()
-        if (fitness == desiredScore):
+        if (fitness == 1):
             return True
         return False
 
     def __selectParentsWithProbability(self, population):
         parents = []
         populationCopy = population.copy()
-        maxFitness = RubikCube().getScore()
         for i in range(2):
             randomNumber = random.random()
             random.shuffle(populationCopy)
             parent = None
             while (parent == None):
                 individual = populationCopy.pop()
-                probabilityToReproduce = individual[0] / maxFitness
+                probabilityToReproduce = individual[0]
                 if (randomNumber <= probabilityToReproduce):
                     parent = individual
                 elif ((i == 0 and len(populationCopy) == 1)

@@ -1,5 +1,5 @@
-from cube import DRLCube
-
+from cube import RubikCube
+from consts import Colors
 import random
 import numpy as np
 from keras import Sequential
@@ -83,6 +83,49 @@ class DataCollected:
         res = 'Ep : '+str(self.episode)+' | '+str(self.reward) + \
             ' puntos en '+str(self.time)+' seg.'
         return res
+
+
+class DRLCube(RubikCube):
+    initialHistory = []
+    prevScore = 0
+
+    def __init__(self, movsCount):
+        super().__init__()
+        self.randomMix(movsCount)
+        self.initialHistory = self.getHistory()
+        self.history = []
+
+    def reset(self):
+        super().__init__()
+        super().applyMovements(self.initialHistory)
+        self.history = []
+
+    def step(self, action):
+        self.prevScore = self.getScore()
+        self.applyMovements([action])
+        return self.getState()
+
+    def getState(self):
+        score = self.getScore()
+        return (self.toArray(), score-self.prevScore, score == 1, score)
+
+    def toArray(self):
+        cubeArray = []
+        faces = [self.front, self.back, self.left,
+                 self.right, self.top, self.down]
+        colors = dict()
+        colors[Colors.BLUE] = 0
+        colors[Colors.GREEN] = 1
+        colors[Colors.RED] = 2
+        colors[Colors.ORANGE] = 3
+        colors[Colors.YELLOW] = 4
+        colors[Colors.WHITE] = 5
+
+        for face in faces:
+            facePieces = list(
+                map(lambda piece: (colors[piece.color]*10 + int(piece.id)), face.piecesList.array))
+            cubeArray.extend(facePieces)
+        return cubeArray
 
 
 def train_dqn(episodes, env, params):
