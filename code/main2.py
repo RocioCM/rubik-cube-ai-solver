@@ -3,13 +3,38 @@ from genetic import GeneticAlgorithm
 import copy
 import time
 
+pList = [
+    [20, 150, 0.05, 0, 2],
+    [20, 250, 0.5, 0.2, 2],
+    [30, 250, 0.5, 0.2, 4],
+    [30, 150, 0.05, 0.2, 2],
+    [30, 150, 0.2, 0.2, 4],
+    [20, 300, 0.5, 0.4, 4],
+    [30, 250, 0.5, 0.2, 2]
+]
+
+# for j in range(30):
+#     cube0 = RubikCube()
+#     cube0.randomMix(30)
+#     cube0.history = []
+
+#     for params in pList:
+
+#         # ---- GENETIC ALGORITHM ---- #
+
+#         startTime = time.time()
+#         gen = GeneticAlgorithm(cube0, *params)
+#         gen.run()
+#         execTime = (time.time() - startTime)
+
+#         print(gen.result[0], ",", end="")
+#     print("")
+
+
 for i in range(10):
     cube0 = RubikCube()
-    # cube0.enableLogs()
     cube0.randomMix(30)
-    # cube0.print()
     cube0.history = []
-    # cube0.logs = False
     print("---")
 
     # ---- RANDOM ALGORITHM ---- #
@@ -31,8 +56,6 @@ for i in range(10):
             maxScore = score
     execTime = (time.time() - startTime)
 
-    # print("--RANDOM--")
-    # print("Promedio:", acc/it)
     print(len(best.getHistory()))
     print(maxScore)
     print(execTime)
@@ -41,12 +64,10 @@ for i in range(10):
     # ---- GENETIC ALGORITHM ---- #
 
     startTime = time.time()
-    gen = GeneticAlgorithm(cube0)
+    gen = GeneticAlgorithm(cube0, *pList[6])
     gen.run()
     execTime = (time.time() - startTime)
 
-    # cube.initialState.print()
-    # cube.result[1].print()
     print(len(gen.result[1].getHistory()))
     print(gen.result[0])
     print(execTime)

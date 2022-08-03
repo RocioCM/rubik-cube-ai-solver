@@ -7,16 +7,21 @@ class GeneticAlgorithm:
     initialState = None
     result = None
     time = 0
-    initialStateMovements = 30
-    populationSize = 250
-    maxTime = 200
-    mutationProbability = 0.5
+    initialStateMovements = None
+    populationSize = None
+    maxTime = 100
+    mutationProbability = None
     splitPercent = 0.2
-    childrenPerParents = 2
+    childrenPerParents = None
 
-    def __init__(self, initialCube):
+    def __init__(self, initialCube, initialStateMovements, populationSize, mutationProbability, splitPercent, childrenPerParents):
         initialCube.history = []
         self.initialState = initialCube
+        self.initialStateMovements = initialStateMovements
+        self.populationSize = populationSize
+        self.mutationProbability = mutationProbability
+        self.splitPercent = splitPercent
+        self.childrenPerParents = childrenPerParents
 
     def __formatPopulationWithFitness(self, population): return list(
         map(lambda individual:

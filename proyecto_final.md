@@ -164,13 +164,70 @@ Los autores del trabajo [17] explican cómo está conformado el modelo que se to
 
 ### Análisis
 
-Para probar el algoritmo genético, se corrieron 135 ejecuciones del mismo y se registró su tiempo de ejecución y resultados. El algoritmo genético fue configurado con los siguientes parámetros:
+Para probar el algoritmo genético, este se configuró con distintos conjuntos de parámetros y se realizaron 30 ejecuciones con cada conjunto de parámetros. En la Figura 7 se puede visualizar un gráfico de cajas con los resultados para cada prueba. 
 
-- Número máximo de generaciones: 200
+<img src="https://user-images.githubusercontent.com/69587750/182520064-85b3535e-c10f-48e6-88b8-39330c60ac62.png" alt="pruebas con distintos parámetros" width="700"/> <br/> Figura 7: gráfico de cajas de resultados probando distintos parámetros.
+
+Los parámetros variables fueron: individuos por generación, probabilidad de mutación, split percent, acciones iniciales e hijos por pareja de padres. A continuación se listan los valores usados para cada parámetro en cada una de las distintas pruebas:
+
+- Prueba 1:
+    - Número máximo de generaciones: 100
+    - Individuos por generación: 150
+    - Probabilidad de mutación: 0.05
+    - Split percent: 0
+    - Acciones iniciales: 20
+    - Hijos por pareja de padres: 2
+- Prueba 2:
+    - Número máximo de generaciones: 100
+    - Individuos por generación: 250
+    - Probabilidad de mutación: 0.5
+    - Split percent: 0.2
+    - Acciones iniciales: 20
+    - Hijos por pareja de padres: 2
+- Prueba 3:
+    - Número máximo de generaciones: 100
+    - Individuos por generación: 250
+    - Probabilidad de mutación: 0.5
+    - Split percent: 0.2
+    - Acciones iniciales: 30
+    - Hijos por pareja de padres: 4
+- Prueba 4:
+    - Número máximo de generaciones: 100
+    - Individuos por generación: 150
+    - Probabilidad de mutación: 0.05
+    - Split percent: 0.2
+    - Acciones iniciales: 30
+    - Hijos por pareja de padres: 2
+- Prueba 5:
+    - Número máximo de generaciones: 100
+    - Individuos por generación: 150
+    - Probabilidad de mutación: 0.2
+    - Split percent: 0.2
+    - Acciones iniciales: 30
+    - Hijos por pareja de padres: 4
+- Prueba 6:
+    - Número máximo de generaciones: 100
+    - Individuos por generación: 300
+    - Probabilidad de mutación: 0.5
+    - Split percent: 0.4
+    - Acciones iniciales: 20
+    - Hijos por pareja de padres: 4
+- Prueba 7:
+    - Número máximo de generaciones: 100
+    - Individuos por generación: 250
+    - Probabilidad de mutación: 0.5
+    - Split percent: 0.2
+    - Acciones iniciales: 30
+    - Hijos por pareja de padres: 2
+
+En la Figura 7 se puede apreciar que la Prueba 7 obtuvo los mejores resultados, con la media más alta de todas y los dos cuartiles superiores iguales o mayores a los de las demás pruebas. Por este motivo, con la combinación de parámetros de la Prueba 7 se corrieron 135 ejecuciones del mismo algoritmo y se registró su tiempo de ejecución y resultados. De modo que para esta instancia el algoritmo genético fue configurado con los siguientes parámetros:
+
+- Número máximo de generaciones: 100
 - Individuos por generación: 250
 - Probabilidad de mutación: 0.5
 - Split percent: 0.2
 - Acciones iniciales: 30
+- Hijos por pareja de padres: 2
 
 El parámetro split percent indica qué porcentaje de la población previa se conservará en cada nueva generación. El parámetro acciones iniciales indica qué cantidad de acciones aleatorias se aplicará a cada individuo de la primera generación.
 
@@ -182,21 +239,21 @@ Para medir la eficiencia de los resultados se utilizó el algoritmo completament
 
 3. Se ejecuta el algoritmo genético utilizando el mismo cubo como estado inicial con los parámetros previamente expuestos. Se registra el resultado obtenido y el tiempo de ejecución.
 
-En la Figura 7 se puede observar un gráfico de cajas de los tiempos de ejecución de ambos algoritmos en cada iteración. El promedio de tiempo de ejecución para el algoritmo aleatorio fue de 33 segundos, mientras que para el algoritmo genético fue de 57.7 segundos. El algoritmo aleatorio ejecutó en promedio 57% más rápido que su contraparte, lo cual es esperable debido a la mayor complejidad del algoritmo genético.
+En la Figura 8 se puede observar un gráfico de cajas de los tiempos de ejecución de ambos algoritmos en cada iteración. El promedio de tiempo de ejecución para el algoritmo aleatorio fue de 33 segundos, mientras que para el algoritmo genético fue de 57.7 segundos. El algoritmo aleatorio ejecutó en promedio 57% más rápido que su contraparte, lo cual es esperable debido a la mayor complejidad del algoritmo genético.
 
-<img src="https://user-images.githubusercontent.com/69587750/182507260-fab63f7e-0372-4ff5-b5db-166f8cf8d7ae.png" alt="tiempos de ejecución" width="400"/> <br/> Figura 7: gráfico de cajas de tiempos de ejecución
+<img src="https://user-images.githubusercontent.com/69587750/182507260-fab63f7e-0372-4ff5-b5db-166f8cf8d7ae.png" alt="tiempos de ejecución" width="400"/> <br/> Figura 8: gráfico de cajas de tiempos de ejecución
 
-Tanto el algoritmo genético como el aleatorio no fueron capaces de llegar al estado objetivo en ninguna ejecución. Es por esto que se tomó el mejor cubo que cada algoritmo logró generar y se midió su porcentaje de piezas colocadas correctamente. En las Figuras 8 y 9 se pueden visualizar los resultados alcanzados por ambos algoritmos en cada iteración. El promedio de progreso alcanzado por el algoritmo aleatorio fue de 34%, mientras que para el algoritmo genético fue de 42%. Esto revela una diferencia del 8% entre ambos algoritmos. Si bien es de esperarse que el algoritmo genético obtenga mejores resultados que el algoritmo aleatorio gracias a su técnica más compleja, resulta sorprendente que esta diferencia no sea significativa.
+Tanto el algoritmo genético como el aleatorio no fueron capaces de llegar al estado objetivo en ninguna ejecución. Es por esto que se tomó el mejor cubo que cada algoritmo logró generar y se midió su porcentaje de piezas colocadas correctamente. En las Figuras 9 y 10 se pueden visualizar los resultados alcanzados por ambos algoritmos en cada iteración. El promedio de progreso alcanzado por el algoritmo aleatorio fue de 34%, mientras que para el algoritmo genético fue de 42%. Esto revela una diferencia del 8% entre ambos algoritmos. Si bien es de esperarse que el algoritmo genético obtenga mejores resultados que el algoritmo aleatorio gracias a su técnica más compleja, resulta sorprendente que esta diferencia no sea significativa.
 
-<img src="https://user-images.githubusercontent.com/69587750/182509525-46345dfb-55e6-4c06-bf07-59de676d85f2.png" alt="resultados por ejecución" width="700"/> <br/> Figura 8: resultados por ejecución
+<img src="https://user-images.githubusercontent.com/69587750/182509525-46345dfb-55e6-4c06-bf07-59de676d85f2.png" alt="resultados por ejecución" width="700"/> <br/> Figura 9: resultados por ejecución
 
-<img src="https://user-images.githubusercontent.com/69587750/182507970-2262c51f-430e-41e2-8eae-93f87245cab0.png" alt="resultados por ejecución" width="400"/> <br/> Figura 9: gráfico de cajas de resultados de cada algoritmo
+<img src="https://user-images.githubusercontent.com/69587750/182507970-2262c51f-430e-41e2-8eae-93f87245cab0.png" alt="resultados por ejecución" width="400"/> <br/> Figura 10: gráfico de cajas de resultados de cada algoritmo
 
-Para el algoritmo aleatorio, todos los resultados tuvieron una totalidad de 20 acciones en su historial, dado que el algoritmo fue configurado para que así fuera. Mientras que el algoritmo genético fue implementado de forma que este número varía para cada individuo. En las Figuras 10 y 11 se puede visualizar el número de acciones ejecutadas para el cubo resultado de cada iteración. El promedio de este número entre todas las ejecuciones es de 21 acciones, que resulta casi ideal, dado que el número ideal de movimientos es 20 o menos [8]. Igualmente cabe mencionar que en el gráfico de cajas en la Figura 11 se puede apreciar que hay una gran varianza entre los resultados, por lo cual este promedio puede no ser tan ideal como aparenta a primera vista.
+Para el algoritmo aleatorio, todos los resultados tuvieron una totalidad de 20 acciones en su historial, dado que el algoritmo fue configurado para que así fuera. Mientras que el algoritmo genético fue implementado de forma que este número varía para cada individuo. En las Figuras 11 y 12 se puede visualizar el número de acciones ejecutadas para el cubo resultado de cada iteración. El promedio de este número entre todas las ejecuciones es de 21 acciones, que resulta casi ideal, dado que el número ideal de movimientos es 20 o menos [8]. Igualmente cabe mencionar que en el gráfico de cajas en la Figura 12 se puede apreciar que hay una gran varianza entre los resultados, por lo cual este promedio puede no ser tan ideal como aparenta a primera vista.
 
-<img src="https://user-images.githubusercontent.com/69587750/182508907-7c31df2c-53a4-4f29-add6-1f8983eac8f9.png" alt="acciones por cubo" width="600"/> <br/> Figura 10: acciones por cubo
+<img src="https://user-images.githubusercontent.com/69587750/182508907-7c31df2c-53a4-4f29-add6-1f8983eac8f9.png" alt="acciones por cubo" width="600"/> <br/> Figura 11: acciones por cubo
 
-<img src="https://user-images.githubusercontent.com/69587750/182508913-957ea91f-d010-4027-bb4c-585ea613cda6.png" alt="acciones por cubo" width="400"/> <br/> Figura 11: gráfico de cajas de acciones por cubo
+<img src="https://user-images.githubusercontent.com/69587750/182508913-957ea91f-d010-4027-bb4c-585ea613cda6.png" alt="acciones por cubo" width="400"/> <br/> Figura 12: gráfico de cajas de acciones por cubo
 
 ### Ideas de mejora
 
@@ -211,7 +268,7 @@ Para esto, primero debería definirse qué es una secuencia redundante. Una secu
 De este análisis, y de forma muy general, se pueden desprender dos reglas de validación:
 
 - No realizar 3 rotaciones idénticas seguidas (ya que es reducible a 1 rotación inversa).
-- No realizar 4 o más rotaciones idénticas seguidas (ya que es igual a n % 4, siendo n la cantidad de rotaciones).
+- No realizar 4 o más rotaciones idénticas seguidas (ya que es igual a n % 4 rotaciones, siendo n la cantidad de rotaciones).
 
 Una implementación posible sería aplicar estas reglas de reducción sobre las redundancias y agregar más rotaciones aleatorias a la secuencia luego de la reducción para completar la secuencia de 30 movimientos (validando que no se vuelva a generar una secuencia redundante). Otra posibilidad sería simplemente descartar las secuencias redundantes y generar una secuencia completamente nueva para remplazarla (y verificar su validez).
 
