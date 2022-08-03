@@ -164,7 +164,7 @@ Los autores del trabajo [17] explican cómo está conformado el modelo que se to
 
 ### Análisis
 
-Para probar el algoritmo genético, se corrieron 10 ejecuciones del mismo y se registró su tiempo de ejecución y resultados. El algoritmo genético fue configurado con los siguientes parámetros:
+Para probar el algoritmo genético, se corrieron 135 ejecuciones del mismo y se registró su tiempo de ejecución y resultados. El algoritmo genético fue configurado con los siguientes parámetros:
 
 - Número máximo de generaciones: 200
 - Individuos por generación: 250
@@ -182,17 +182,21 @@ Para medir la eficiencia de los resultados se utilizó el algoritmo completament
 
 3. Se ejecuta el algoritmo genético utilizando el mismo cubo como estado inicial con los parámetros previamente expuestos. Se registra el resultado obtenido y el tiempo de ejecución.
 
-En la Figura 7 se pueden observar los tiempos de ejecución de ambos algoritmos en cada iteración. El promedio de tiempo de ejecución para el algoritmo aleatorio fue de 35.2 segundos, mientras que para el algoritmo genético fue de 63.7 segundos. El algoritmo aleatorio ejecutó en promedio 55% más rápido que su contraparte, lo cual es esperable debido a la mayor complejidad del algoritmo genético.
+En la Figura 7 se puede observar un gráfico de cajas de los tiempos de ejecución de ambos algoritmos en cada iteración. El promedio de tiempo de ejecución para el algoritmo aleatorio fue de 33 segundos, mientras que para el algoritmo genético fue de 57.7 segundos. El algoritmo aleatorio ejecutó en promedio 57% más rápido que su contraparte, lo cual es esperable debido a la mayor complejidad del algoritmo genético.
 
-<img src="https://user-images.githubusercontent.com/69587750/182073451-820acb38-29e7-45e6-a65e-eb7463461b14.png" alt="tiempos de ejecución" width="500"/> <br/> Figura 7: tiempos de ejecución
+<img src="https://user-images.githubusercontent.com/69587750/182507260-fab63f7e-0372-4ff5-b5db-166f8cf8d7ae.png" alt="tiempos de ejecución" width="400"/> <br/> Figura 7: gráfico de cajas de tiempos de ejecución
 
-Tanto el algoritmo genético como el aleatorio no fueron capaces de llegar al estado objetivo en ninguna ejecución. Es por esto que se tomó el mejor cubo que cada algoritmo logró generar y se midió su porcentaje de piezas colocadas correctamente. En la Figura 8 se pueden visualizar los resultados alcanzados por ambos algoritmos en cada iteración. El promedio de progreso alcanzado por el algoritmo aleatorio fue de 34%, mientras que para el algoritmo genético fue de 43%. Esto revela una diferencia del 9% entre ambos algoritmos. Si bien es de esperarse que el algoritmo genético obtenga mejores resultados que el algoritmo aleatorio gracias a su técnica más compleja, resulta sorprendente que esta diferencia no sea significativa.
+Tanto el algoritmo genético como el aleatorio no fueron capaces de llegar al estado objetivo en ninguna ejecución. Es por esto que se tomó el mejor cubo que cada algoritmo logró generar y se midió su porcentaje de piezas colocadas correctamente. En las Figuras 8 y 9 se pueden visualizar los resultados alcanzados por ambos algoritmos en cada iteración. El promedio de progreso alcanzado por el algoritmo aleatorio fue de 34%, mientras que para el algoritmo genético fue de 42%. Esto revela una diferencia del 8% entre ambos algoritmos. Si bien es de esperarse que el algoritmo genético obtenga mejores resultados que el algoritmo aleatorio gracias a su técnica más compleja, resulta sorprendente que esta diferencia no sea significativa.
 
-<img src="https://user-images.githubusercontent.com/69587750/182073462-ba0f4053-5037-4aeb-bad5-725af8323ac9.png" alt="resultados por ejecución" width="500"/> <br/> Figura 8: resultados por ejecución
+<img src="https://user-images.githubusercontent.com/69587750/182509525-46345dfb-55e6-4c06-bf07-59de676d85f2.png" alt="resultados por ejecución" width="700"/> <br/> Figura 8: resultados por ejecución
 
-Para el algoritmo aleatorio, todos los resultados tuvieron una totalidad de 20 acciones en su historial, dado que el algoritmo fue configurado para que así fuera. Mientras que el algoritmo genético fue implementado de forma que este número varía para cada individuo. En la Figura 9 se puede visualizar el número de acciones ejecutadas para el cubo resultado de cada iteración. El promedio de este número entre todas las ejecuciones es de 35 acciones, que resulta un poco más alto de lo esperado, pero no resulta alarmante, dado que el número ideal de movimientos es 20 o menos [8].
+<img src="https://user-images.githubusercontent.com/69587750/182507970-2262c51f-430e-41e2-8eae-93f87245cab0.png" alt="resultados por ejecución" width="400"/> <br/> Figura 9: gráfico de cajas de resultados de cada algoritmo
 
-<img src="https://user-images.githubusercontent.com/69587750/182073471-b20d5b48-11e6-4df0-aeca-44d936aba694.png" alt="acciones por cubo" width="500"/> <br/> Figura 9: acciones por cubo
+Para el algoritmo aleatorio, todos los resultados tuvieron una totalidad de 20 acciones en su historial, dado que el algoritmo fue configurado para que así fuera. Mientras que el algoritmo genético fue implementado de forma que este número varía para cada individuo. En las Figuras 10 y 11 se puede visualizar el número de acciones ejecutadas para el cubo resultado de cada iteración. El promedio de este número entre todas las ejecuciones es de 21 acciones, que resulta casi ideal, dado que el número ideal de movimientos es 20 o menos [8]. Igualmente cabe mencionar que en el gráfico de cajas en la Figura 11 se puede apreciar que hay una gran varianza entre los resultados, por lo cual este promedio puede no ser tan ideal como aparenta a primera vista.
+
+<img src="https://user-images.githubusercontent.com/69587750/182508907-7c31df2c-53a4-4f29-add6-1f8983eac8f9.png" alt="acciones por cubo" width="600"/> <br/> Figura 10: acciones por cubo
+
+<img src="https://user-images.githubusercontent.com/69587750/182508913-957ea91f-d010-4027-bb4c-585ea613cda6.png" alt="acciones por cubo" width="400"/> <br/> Figura 11: gráfico de cajas de acciones por cubo
 
 ## Conclusiones
 
