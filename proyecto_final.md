@@ -198,11 +198,32 @@ Para el algoritmo aleatorio, todos los resultados tuvieron una totalidad de 20 a
 
 <img src="https://user-images.githubusercontent.com/69587750/182508913-957ea91f-d010-4027-bb4c-585ea613cda6.png" alt="acciones por cubo" width="400"/> <br/> Figura 11: gráfico de cajas de acciones por cubo
 
+### Ideas de mejora
+
+Durante las pruebas realizadas, saltó a la vista que el algoritmo completamente aleatorio tiene algunas cualidades muy relevantes: tiene una implementación trivial, su tiempo de ejecución es mucho menor que el del algoritmo genético y la calidad de sus resultados es cercana a la del algoritmo genético. Mientras que las primeras dos son ventajas respecto al algoritmo genético, la tercera es una desventaja, pero es posible que sea una cualidad mejorable. Si se pudiera lograr que la calidad de los resultados de este algoritmo igualara o superara la calidad del algoritmo genético, el algoritmo aleatorio superaría al genético en todos los aspectos.
+
+La implementación que se hizo del algoritmo completamente aleatorio para este trabajo fue extremadamente simple: se crea un cubo, se le aplica una secuencia aleatoria de 20 rotaciones y se calcula su fitness. Esta acción se repite numerosas veces y se mantiene registro de cuál fue el cubo con mayor fitness entre todas las repeticiones.
+
+A partir de un análisis básico de la naturaleza del cubo rubik, se podría implementar una validación sobre la secuencia de rotaciones aleatorias antes de aplicarla, de modo que la secuencia se considere válida únicamente si no es redundante. Eliminando las secuencias redundantes, es posible que se generen resultados más valiosos y más variados en menor cantidad de iteraciones.
+
+Para esto, primero debería definirse qué es una secuencia redundante. Una secuencia redundante de n rotaciones es una secuencia de rotaciones que, al aplicarse sobre el cubo en un estado dado, deja al cubo en un nuevo estado al cual se podría llegar (desde el estado anterior) en menos de n rotaciones. Por ejemplo, hacer 4 rotaciones iguales de la misma cara seguidas deja al cubo en el mismo estado que si se realizaran 0 rotaciones. O realizar 3 rotaciones seguidas de una misma cara en un sólo sentido deja al cubo en el mismo estado que realizar 1 sola rotación de la misma cara en el sentido contrario.
+
+De este análisis, y de forma muy general, se pueden desprender dos reglas de validación:
+
+- No realizar 3 rotaciones idénticas seguidas (ya que es reducible a 1 rotación inversa).
+- No realizar 4 o más rotaciones idénticas seguidas (ya que es igual a n % 4, siendo n la cantidad de rotaciones).
+
+Una implementación posible sería aplicar estas reglas de reducción sobre las redundancias y agregar más rotaciones aleatorias a la secuencia luego de la reducción para completar la secuencia de 30 movimientos (validando que no se vuelva a generar una secuencia redundante). Otra posibilidad sería simplemente descartar las secuencias redundantes y generar una secuencia completamente nueva para remplazarla (y verificar su validez).
+
+Además de las dos reglas básicas previamente definidas, en el paper [9] se explica que el conjunto de secuencias de movimientos del cubo rubik forma un grupo (en la acepción matemática de la palabra). De modo que a través de teoría de grupos podrían elaborarse reglas más complejas de validación, pero que exceden el alcance de este trabajo.
+
 ## Conclusiones
 
 En este trabajo se hizo foco en la resolución del problema mediante el algoritmo genético, a pesar de que numerosos trabajos previos indiquen que el método más efectivo y más utilizado para resolver este problema es Deep Reinforcement Learning.
 
-Visto que una implementación por fuerza bruta sería prácticamente imposible, se hizo una implementación completamente aleatoria únicamente con fines ilustrativos pero que dio mejores resultados que lo esperado. Mientras que los resultados obtenidos mediante el algoritmo genético fueron levemente superiores en calidad, pero peores en tiempo de ejecución. Para este problema en específico resulta más relevante la calidad del resultado antes que el tiempo ocupado, por lo que el algoritmo genético resulta ser más óptimo en esa comparación. Si bien este algoritmo no logró en ninguna ocasión armar el cubo por completo, un promedio del cubo 43% completado es un resultado aceptable para los objetivos de este trabajo. Es destacable que la obtención de resultados parciales es una posibilidad completamente esperable del algoritmo genético dado que es un algoritmo de optimización y esto fue tenido en cuenta al elegir este algoritmo.
+Visto que una implementación por fuerza bruta sería prácticamente imposible, se hizo una implementación completamente aleatoria únicamente con fines ilustrativos. Sorprendentemente, este algoritmo dio mejores resultados que lo esperado, mientras que los resultados obtenidos mediante el algoritmo genético fueron levemente superiores en calidad, pero peores en tiempo de ejecución. Para este problema en específico resulta más relevante la calidad del resultado antes que el tiempo ocupado, por lo que el algoritmo genético resulta ser más óptimo en esa comparación. Si bien este algoritmo no logró en ninguna ocasión armar el cubo por completo, un promedio del cubo 43% completado es un resultado aceptable para los objetivos de este trabajo. Es destacable que la obtención de resultados parciales es una posibilidad completamente esperable del algoritmo genético dado que es un algoritmo de optimización y esto fue tenido en cuenta al elegir este algoritmo.
+
+A su vez, debido a su simplicidad de implementación del algoritmo completamente aleatorio y su efectividad cercana a la del algoritmo genético, se considera un camino explorable en el futuro realizar mejoras sobre el algoritmo aleatorio, como agregar validación de secuencias redundantes, para lograr resultados de calidad similar a los obtenidos por el algoritmo genético, pero con menor costo computacional.
 
 Si bien la implementación de DRL realizada para este trabajo no dio resultados aceptables, se ha probado que la técnica sí resulta ser efectiva para este problema en numerosos trabajos previos ya citados. De todos modos, se deja fuera del alcance de este trabajo la adaptación de este algoritmo para que entregue resultados valiosos como los obtenidos en otros trabajos mediante la misma técnica.
 
